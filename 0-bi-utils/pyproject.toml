@@ -1,0 +1,18 @@
+[project]
+name = "utils-bi"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "hdbcli>=2.29.25",
+    "pandas>=3.0.5",
+    "pyodbc>=5.3.0",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0.2",
+    "sqlalchemy>=2.0.52",
+    "sqlalchemy-hana>=4.6.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

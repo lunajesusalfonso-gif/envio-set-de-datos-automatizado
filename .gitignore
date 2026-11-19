@@ -1,0 +1,26 @@
+# Credenciales
+.env
+*.env
+!.env.example
+
+# Datos generados, adjuntos y logs
+data/*
+!data/.gitkeep
+log/*
+!log/.gitkeep
+*.csv
+*.zip
+*.log
+
+# Consultas productivas y destinatarios reales (solo se versionan los ejemplos)
+src/queries/*.sql
+!src/queries/*.example.sql
+config/email_dispatcher/distribution_lists/*.txt
+!config/email_dispatcher/distribution_lists/example.txt
+
+# Entorno local
+.venv/
+__pycache__/
+*.py[cod]
+.vscode/
+.idea/

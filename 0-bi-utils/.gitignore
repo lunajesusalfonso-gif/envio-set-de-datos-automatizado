@@ -1,0 +1,12 @@
+.venv/
+.uv-cache/
+.pytest_cache/
+.test-tmp/
+__pycache__/
+*.py[cod]
+*.log
+output/
+
+# Credenciales: nunca versionar
+.env
+
