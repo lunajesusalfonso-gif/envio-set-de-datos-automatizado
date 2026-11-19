@@ -42,6 +42,17 @@ powershell -ExecutionPolicy Bypass -File .\register_task.ps1
 
 `main.ps1` usa `.venv\Scripts\python.exe`; para otro intérprete define la variable de entorno `HOTSALE_PYTHON`.
 
+## Problema resuelto: límite de tamaño del correo
+
+Conforme crecía el acumulado de la temporada, el CSV llegó a ~37 MB (más de 500 mil filas) y el servidor de correo lo rechazó (`554 5.2.270 Message size exceeds maximum size limit`). La solución fue comprimir el CSV en ZIP antes de enviarlo (con `ZIP_DEFLATED` y el MIME `application/zip` explícito): **36.8 MB → 4.2 MB**, muy por debajo del límite incluso con la codificación base64 del adjunto.
+
 ## Seguridad
 
-`.gitignore` excluye el `.env`, las consultas productivas (`src/queries/*.sql`, salvo los `*.example.sql`), las listas de distribución reales, los datos generados (`data/`, `*.csv`, `*.zip`) y los logs.
+- **Sin secretos en el repositorio.** Las credenciales viven en un `.env` local (excluido por `.gitignore`) o en variables de entorno del sistema; `.env` es opcional.
+- **Sin datos reales.** `.gitignore` excluye las consultas productivas (`src/queries/*.sql`, salvo los `*.example.sql`), las listas de distribución reales, los datos generados (`data/`, `*.csv`, `*.zip`) y los logs.
+- **Escaneo automático de secretos** con [gitleaks](https://github.com/gitleaks/gitleaks): en cada push (GitHub Actions, `.github/workflows/secret-scan.yml`) y antes de cada commit (`.pre-commit-config.yaml`):
+  ```powershell
+  pip install pre-commit
+  pre-commit install
+  ```
+- Los logs no registran credenciales, cadenas de conexión ni destinatarios.

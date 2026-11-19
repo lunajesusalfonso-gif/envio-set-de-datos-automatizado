@@ -61,9 +61,10 @@ def main() -> None:
     # ========================================================
     # 3. VARIABLES DE ENTORNO
     # ========================================================
-    if not DOTENV_PATH.is_file():
-        raise FileNotFoundError(f"No existe el archivo de entorno: {DOTENV_PATH}")
-    load_dotenv(DOTENV_PATH, override=True)
+    # Credenciales: .env local (no versionado) o, si no existe, variables de
+    # entorno del sistema. Nunca se escriben en código ni en el log.
+    if DOTENV_PATH.is_file():
+        load_dotenv(DOTENV_PATH, override=True)
 
     url = make_url(_env("HANA_CONNECTION_STRING"))
     smtp_config = {
